@@ -9,11 +9,11 @@ Event processing function Node-RED nodes including sequence functions like `map`
 
 There are 3 nodes in this project.
 
-1. `Captureor in` node ... Capture and store data under the given conditions
-1. `Map in` node ... Provide `map` function
-1. `Filter in` node ... Provide `filter` function
+1. `capture` node ... Capture and store data under the given conditions
+1. `map` node ... Provide `map` function
+1. `filter` node ... Provide `filter` function
 
-These functions are expected to be used with `node-red-contrib-cache` and `node-red-contrib-statistics` nodes for better event processing functionalities.
+These functions are expected to be used with [`node-red-contrib-cache`](https://www.npmjs.com/package/node-red-contrib-cache) and [`node-red-contrib-statistics`](https://www.npmjs.com/package/node-red-contrib-statistics) nodes for better event processing functionalities.
 
 ### Installation
 
