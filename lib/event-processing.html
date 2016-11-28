@@ -1,0 +1,81 @@
+<!-- capture -->
+<script type='text/x-red' data-template-name='capture'>
+  <div class='form-row'>
+    <label for='node-input-name'>
+      <i class='fa fa-tag'></i>
+      <span data-i18n='node-red:common.label.name'></span>
+    </label>
+    <input type='text' id='node-input-name' data-i18n='[placeholder]node-red:common.label.name'>
+  </div>
+  <div class='form-row node-row-capture'>
+    <label style='width: auto;'>
+      <i class='fa fa-hand-rock-o'></i>
+      <span data-i18n='event-processing.label.capture'></span>
+    </label>
+    <ul>
+      <li style='height: 40px;'>
+        <label style='width: 280px;' for='node-input-size'>
+          <span data-i18n='event-processing.label.size'></span>
+        </label>
+        <input id='node-input-size' data-i18n='[placeholder]event-processing.placeholder.size' type='text' style='width: 75px;'>
+      </li>
+      <li style='height: 40px;'>
+        <label style='width: 280px;' for='node-input-period'>
+          <span data-i18n='event-processing.label.period'></span>
+        </label>
+        <input id='node-input-period' data-i18n='[placeholder]event-processing.placeholder.period' type='text' style='width: 75px;'>
+      </li>
+    </ul>
+  </div>
+
+  <div class='form-row node-row-trigger'>
+    <label style='width: auto;'>
+      <i class='fa fa-share'></i>
+      <span data-i18n='event-processing.label.trigger'></span>
+    </label>
+    <ul>
+      <li style='height: 40px;'>
+        <label style='width: 280px;' for='node-input-interval'>
+          <span data-i18n='event-processing.label.interval'></span>
+        </label>
+        <input id='node-input-interval' data-i18n='[placeholder]event-processing.placeholder.interval' type='text' style='width: 75px;'>
+      </li>
+      <li style='height: 40px;'>
+        <label style='width: 280px;' for='node-input-onNewMessage'>
+          <span data-i18n='event-processing.label.onNewMessage'></span>
+        </label>
+        <input type='checkbox' id='node-input-onNewMessage' style='display: inline-block; width: auto; vertical-align: top;'>
+      </li>
+      <li style='height: 40px;'>
+        <label style='width: auto; padding-top: 6px;'>
+          <span data-i18n='event-processing.label.triggerAnnotation'></span>
+        </label>
+      </li>
+    </ul>
+  </div>
+</script>
+
+<script type='text/javascript'>
+  RED.nodes.registerType('capture',{
+    category: 'function',
+    defaults: {
+      name: { name: '' },
+      size: { value : 10, required: false },
+      period: { value: 30, required: false },
+      interval: { value : '', required: false },
+      onNewMessage: { value: true, required: false }
+    },
+    color: 'Gold',
+    inputs: 1,
+    outputs: 1,
+    icon: 'join.png',
+    label: function() {
+      return this.name || 'capture';
+    },
+    labelStyle: function() {
+      return this.name ? 'node_label_italic' : '';
+    },
+    oneditprepare: function() {
+    }
+  });
+</script>

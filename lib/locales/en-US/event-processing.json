@@ -1,0 +1,23 @@
+{
+  "event-processing" : {
+    "label" : {
+      "capture" : "Capture a message into a list:",
+      "size" : "With a fixed number of messages:",
+      "period" : "Within a given time period:",
+      "trigger" : "Send the message:",
+      "interval" : "Every `n` seconds:",
+      "onNewMessage" : "Whenever a new message arrives:",
+      "triggerAnnotation" : "After a message with the `msg.capture` property set"
+    },
+    "placeholder" : {
+      "size" : "count",
+      "period" : "second",
+      "interval" : "second",
+      "defaultTtl" : "0=unlimited",
+      "checkPeriod" : "0=never checked"
+    },
+    "errors" : {
+      "unknown" : "[EventProcessing] Unknown Error (__error__)"
+    }
+  }
+}

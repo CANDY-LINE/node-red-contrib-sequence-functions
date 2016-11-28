@@ -1,0 +1,17 @@
+<script type="text/x-red" data-help-name="capture">
+<p>A function that captures a sequence of messages into a single list.</p>
+<p>This node is different from the <code>join</code> node in that
+it never forgets the sent messages in the list while the given capturing conditions are met.</p>
+<p>The type of the capturing conditions can be:</p>
+<ul>
+    <li>the list contains the fixed number (or less) of messages</li>
+    <li>a message in the list can be retained within the given time of period</li>
+</ul>
+<p>You can also configure the trigger conditions, which show when the list is emitted to the following node.</p>
+<ul>
+   <li>Every <code>n</code> seconds (but nothing is emitted when the list is empty)</li>
+   <li>Whenever a new message is coming</li>
+   <li>When a message with <code>msg.capture</code> property set is coming</li>
+</ul>
+<p>Regarding the last condition, be aware that this node doesn't append the <code>msg</code> into the list.</p>
+</script>
