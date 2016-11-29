@@ -1,6 +1,9 @@
 {
   "event-processing" : {
     "label" : {
+      "topic" : "Topic",
+      "valueProperty" : "Value (x) Property",
+      "mapFunctionExpr" : "Map function expression",
       "capture" : "Capture a message into a list:",
       "size" : "With a fixed number of messages:",
       "period" : "Within a given time period:",
@@ -10,6 +13,9 @@
       "triggerAnnotation" : "After a message with the `msg.capture` property set"
     },
     "placeholder" : {
+      "topic" : "(optional)",
+      "valueProperty" : "(default: payload)",
+      "mapFunctionExpr" : "(`x` represents a value)",
       "size" : "count",
       "period" : "second",
       "interval" : "second",
@@ -17,6 +23,7 @@
       "checkPeriod" : "0=never checked"
     },
     "errors" : {
+      "parserError" : "[map node] Parser Error (__error__)",
       "unknown" : "[EventProcessing] Unknown Error (__error__)"
     }
   }

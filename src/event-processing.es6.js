@@ -1,5 +1,7 @@
 'use strict';
 
+import { Parser } from 'expr-eval';
+
 export default function(RED) {
 
   class CaptureNode {
@@ -65,4 +67,53 @@ export default function(RED) {
     }
   }
   RED.nodes.registerType('capture', CaptureNode);
+
+  class MapNode {
+    constructor(n) {
+      RED.nodes.createNode(this, n);
+      this.name = n.name;
+      this.topic = n.topic;
+      this.valueProperty = n.valueProperty || 'payload';
+      if (n.mapFunctionExpr) {
+        this.parsedMapFunction = Parser.parse(n.mapFunctionExpr);
+        try {
+          this.parsedMapFunction.evaluate({ x: 0 });
+          this.mapFunction = (val) => {
+            return this.parsedMapFunction.evaluate({ x: val });
+          };
+        } catch (e) {
+          RED.log.error(RED._('event-processing.errors.parserError', { error: e }));
+        }
+      }
+      if (!this.mapFunction) {
+        this.mapFunction = (val) => {
+          return val;
+        };
+      }
+      let node = this;
+      function applyMapFunction(msg) {
+        let ary = msg.payload;
+        return ary.map((ele) => {
+          let val = RED.util.getMessageProperty(ele, node.valueProperty);
+          return node.mapFunction(val);
+        });
+      }
+      this.on('input', (msg) => {
+        if (!msg.payload) {
+          return;
+        }
+        if (!Array.isArray(msg.payload)) {
+          msg.payload = [msg.payload];
+        }
+        let result = applyMapFunction(msg);
+        if (result) {
+          this.send({
+            topic: this.topic,
+            payload: result
+          });
+        }
+      });
+    }
+  }
+  RED.nodes.registerType('map', MapNode);
 }

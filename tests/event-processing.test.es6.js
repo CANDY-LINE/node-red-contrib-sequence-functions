@@ -22,7 +22,7 @@ describe('event-processing module', () => {
   it('should be successfully initialized', () => {
     let registerType = sandbox.stub(RED.nodes, 'registerType');
     eventProcessing(RED);
-    assert.isTrue(registerType.calledOnce);
+    assert.isTrue(registerType.calledTwice);
   });
 
   describe('CaptureNode', () => {
@@ -54,6 +54,39 @@ describe('event-processing module', () => {
         assert.equal('my-name', node.name);
         assert.isDefined(node.eventSequence);
         assert.equal(0, node.eventSequence.length);
+      });
+    });
+  });
+
+  describe('MapNode', () => {
+    let MapNode;
+    beforeEach(() => {
+      RED.nodes.createNode = t => {
+        t.status = () => {};
+        t.on = () => {};
+        t.send = () => {};
+      };
+      RED.nodes.registerType = (n, t) => {
+        if (n === 'map') {
+          MapNode = t;
+        }
+      };
+    });
+    afterEach(() => {
+      sandbox.restore();
+    });
+    describe('#constructor()', () => {
+      it('should be able to create a new MapNode', () => {
+        eventProcessing(RED);
+        assert.isDefined(MapNode);
+        let node = new MapNode({
+          name: 'my-name',
+          topic: '123',
+          valueProperty: 'payload',
+          mapFunctionExpr: 'x'
+        });
+        assert.equal('my-name', node.name);
+        assert.isDefined(node.mapFunction);
       });
     });
   });
