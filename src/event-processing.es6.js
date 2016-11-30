@@ -127,8 +127,6 @@ export default function(RED) {
       this.name = n.name;
       this.topic = n.topic;
       this.reduceRight = n.reduceRight;
-      this.valueProperty = n.valueProperty || 'payload';
-      this.readFromProperty = n.readFromProperty;
       if (n.reduceFunctionExpr) {
         this.parsedReduceFunction = Parser.parse(n.reduceFunctionExpr);
         try {
@@ -149,15 +147,7 @@ export default function(RED) {
       let node = this;
       function applyReduceFunction(msg) {
         let ary = msg.payload;
-        return node.arrayReduce.call(ary, (accu, ele) => {
-          let a = accu;
-          let x = ele;
-          if (node.readFromProperty) {
-            x = RED.util.getMessageProperty(ele, node.valueProperty);
-            if (Object.prototype.toString.call(accu) === '[object Object]') {
-              a = RED.util.getMessageProperty(accu, node.valueProperty);
-            }
-          }
+        return node.arrayReduce.call(ary, (a, x) => {
           return node.reduceFunction(a, x);
         });
       }
