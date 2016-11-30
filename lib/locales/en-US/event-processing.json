@@ -22,9 +22,7 @@
       "reduceFunctionExpr" : "(`a`=accumulator,`x`=current value)",
       "size" : "count",
       "period" : "second",
-      "interval" : "second",
-      "defaultTtl" : "0=unlimited",
-      "checkPeriod" : "0=never checked"
+      "interval" : "second"
     },
     "errors" : {
       "parserError" : "[map node] Parser Error (__error__)",
