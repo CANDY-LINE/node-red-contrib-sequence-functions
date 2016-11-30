@@ -165,12 +165,10 @@ export default function(RED) {
           msg.payload = [msg.payload];
         }
         let result = applyReduceFunction(msg);
-        if (result) {
-          this.send({
-            topic: this.topic,
-            payload: result
-          });
-        }
+        this.send({
+          topic: this.topic,
+          payload: result
+        });
       });
     }
   }
