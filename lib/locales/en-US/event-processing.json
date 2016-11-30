@@ -6,6 +6,7 @@
       "mapFunctionExpr" : "Map function expression",
       "reduceFunctionExpr" : "Reduce function expression",
       "reduceRight" : "Reduce right",
+      "readFromProperty" : "Read value from property",
       "capture" : "Capture a message into a list:",
       "size" : "With a fixed number of messages:",
       "period" : "Within a given time period:",
