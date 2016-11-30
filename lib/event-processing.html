@@ -140,3 +140,64 @@
     }
   });
 </script>
+
+<!-- reduce -->
+<script type='text/x-red' data-template-name='reduce'>
+  <div class='form-row'>
+    <label for='node-input-name'>
+      <i class='fa fa-tag'></i>
+      <span data-i18n='node-red:common.label.name'></span>
+    </label>
+    <input type='text' id='node-input-name' data-i18n='[placeholder]node-red:common.label.name'>
+  </div>
+  <div class='form-row'>
+    <label for='node-input-topic'>
+      <i class='fa fa-hashtag'></i>
+      <span data-i18n='event-processing.label.topic'></span>
+    </label>
+    <input type='text' id='node-input-topic' data-i18n='[placeholder]event-processing.placeholder.topic'>
+  </div>
+  <div class="form-row" id="node-valueProperty">
+    <label for='node-input-valueProperty'>
+      <i class='fa fa-file'></i>
+      <span data-i18n='event-processing.label.valueProperty'></span>
+    </label>
+    <input type='text' id='node-input-valueProperty' data-i18n='[placeholder]event-processing.placeholder.valueProperty'>
+  </div>
+  <div class="form-row" id="node-reduceFunctionExpr">
+    <label for='node-input-reduceFunctionExpr'>
+      <i class='fa fa-cog'></i>
+      <span data-i18n='event-processing.label.reduceFunctionExpr'></span>
+    </label>
+    <input type='text' id='node-input-reduceFunctionExpr' style='width: 70%;' data-i18n='[placeholder]event-processing.placeholder.reduceFunctionExpr'>
+  </div>
+</script>
+
+<script type='text/javascript'>
+  RED.nodes.registerType('reduce',{
+    category: 'function',
+    defaults: {
+      name: { name: '' },
+      topic: { value : '', required: false },
+      valueProperty: { value: 'payload', required: false },
+      reduceFunctionExpr: { value: '', required: false }
+    },
+    color: 'Gold',
+    inputs: 1,
+    outputs: 1,
+    icon: 'join.png',
+    label: function() {
+      return this.name || 'reduce';
+    },
+    labelStyle: function() {
+      return this.name ? 'node_label_italic' : '';
+    },
+    oneditprepare: function() {
+      $("#node-input-valueProperty").typedInput({default:'msg',types:['msg']});
+      $("#node-input-reduceFunctionExpr").typedInput({default:'string',types:[{
+        value: "string",
+        label: "f(a,x) ="
+      }]});
+    }
+  });
+</script>

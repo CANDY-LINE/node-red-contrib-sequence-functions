@@ -22,7 +22,7 @@ describe('event-processing module', () => {
   it('should be successfully initialized', () => {
     let registerType = sandbox.stub(RED.nodes, 'registerType');
     eventProcessing(RED);
-    assert.isTrue(registerType.calledTwice);
+    assert.equal(3, registerType.callCount);
   });
 
   describe('CaptureNode', () => {
@@ -87,6 +87,39 @@ describe('event-processing module', () => {
         });
         assert.equal('my-name', node.name);
         assert.isDefined(node.mapFunction);
+      });
+    });
+  });
+
+  describe('ReduceNode', () => {
+    let ReduceNode;
+    beforeEach(() => {
+      RED.nodes.createNode = t => {
+        t.status = () => {};
+        t.on = () => {};
+        t.send = () => {};
+      };
+      RED.nodes.registerType = (n, t) => {
+        if (n === 'reduce') {
+          ReduceNode = t;
+        }
+      };
+    });
+    afterEach(() => {
+      sandbox.restore();
+    });
+    describe('#constructor()', () => {
+      it('should be able to create a new ReduceNode', () => {
+        eventProcessing(RED);
+        assert.isDefined(ReduceNode);
+        let node = new ReduceNode({
+          name: 'my-name',
+          topic: '123',
+          valueProperty: 'payload',
+          reduceFunctionExpr: 'x'
+        });
+        assert.equal('my-name', node.name);
+        assert.isDefined(node.reduceFunction);
       });
     });
   });

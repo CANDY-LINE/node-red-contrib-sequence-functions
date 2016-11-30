@@ -116,4 +116,53 @@ export default function(RED) {
     }
   }
   RED.nodes.registerType('map', MapNode);
+
+  class ReduceNode {
+    constructor(n) {
+      RED.nodes.createNode(this, n);
+      this.name = n.name;
+      this.topic = n.topic;
+      this.valueProperty = n.valueProperty || 'payload';
+      if (n.reduceFunctionExpr) {
+        this.parsedReduceFunction = Parser.parse(n.reduceFunctionExpr);
+        try {
+          this.parsedReduceFunction.evaluate({ a: 0, x: 0 });
+          this.reduceFunction = (accu, val) => {
+            return this.parsedReduceFunction.evaluate({ a: accu, x: val });
+          };
+        } catch (e) {
+          RED.log.error(RED._('event-processing.errors.parserError', { error: e }));
+        }
+      }
+      if (!this.reduceFunction) {
+        this.reduceFunction = (accu, val) => {
+          return val;
+        };
+      }
+      let node = this;
+      function applyReduceFunction(msg) {
+        let ary = msg.payload;
+        return ary.reduce((accu, ele) => {
+          let val = RED.util.getMessageProperty(ele, node.valueProperty);
+          return node.reduceFunction(accu, val);
+        }, null);
+      }
+      this.on('input', (msg) => {
+        if (!msg.payload) {
+          return;
+        }
+        if (!Array.isArray(msg.payload)) {
+          msg.payload = [msg.payload];
+        }
+        let result = applyReduceFunction(msg);
+        if (result) {
+          this.send({
+            topic: this.topic,
+            payload: result
+          });
+        }
+      });
+    }
+  }
+  RED.nodes.registerType('reduce', ReduceNode);
 }

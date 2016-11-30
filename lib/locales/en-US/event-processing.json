@@ -4,6 +4,7 @@
       "topic" : "Topic",
       "valueProperty" : "Value (x) Property",
       "mapFunctionExpr" : "Map function expression",
+      "reduceFunctionExpr" : "Reduce function expression",
       "capture" : "Capture a message into a list:",
       "size" : "With a fixed number of messages:",
       "period" : "Within a given time period:",
@@ -15,7 +16,8 @@
     "placeholder" : {
       "topic" : "(optional)",
       "valueProperty" : "(default: payload)",
-      "mapFunctionExpr" : "(`x` represents a value)",
+      "mapFunctionExpr" : "(`x`=current value)",
+      "reduceFunctionExpr" : "(`a`=accumulator,`x`=current value)",
       "size" : "count",
       "period" : "second",
       "interval" : "second",
