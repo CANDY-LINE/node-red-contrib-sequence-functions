@@ -96,6 +96,11 @@
     </label>
     <input type='text' id='node-input-topic' data-i18n='[placeholder]event-processing.placeholder.topic'>
   </div>
+  <div class="form-row" id="node-readFromProperty">
+    <label>&nbsp;</label>
+    <input type="checkbox" id="node-input-readFromProperty" style="display: inline-block; width: auto; vertical-align: top;">
+    <label for="node-input-readFromProperty" style="width: 70%;" data-i18n="event-processing.label.readFromProperty"></label>
+  </div>
   <div class="form-row" id="node-valueProperty">
     <label for='node-input-valueProperty'>
       <i class='fa fa-file'></i>
@@ -119,6 +124,7 @@
       name: { name: '' },
       topic: { value : '', required: false },
       valueProperty: { value: 'payload', required: false },
+      readFromProperty: { value: false, required: false },
       mapFunctionExpr: { value: '', required: false }
     },
     color: 'Gold',
@@ -137,6 +143,12 @@
         value: "string",
         label: "f(x) ="
       }]});
+      if (!$("#node-input-readFromProperty").val()) {
+        $("#node-input-valueProperty").prop('disabled', true);
+      }
+      $("#node-input-readFromProperty").change(function() {
+        $("#node-input-valueProperty").prop('disabled', !$(this).is(":checked"));
+      });
     }
   });
 </script>

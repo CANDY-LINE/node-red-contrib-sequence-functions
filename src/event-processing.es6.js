@@ -74,6 +74,7 @@ export default function(RED) {
       this.name = n.name;
       this.topic = n.topic;
       this.valueProperty = n.valueProperty || 'payload';
+      this.readFromProperty = n.readFromProperty;
       if (n.mapFunctionExpr) {
         this.parsedMapFunction = Parser.parse(n.mapFunctionExpr);
         try {
@@ -94,8 +95,11 @@ export default function(RED) {
       function applyMapFunction(msg) {
         let ary = msg.payload;
         return ary.map((ele) => {
-          let val = RED.util.getMessageProperty(ele, node.valueProperty);
-          return node.mapFunction(val);
+          let x = ele;
+          if (node.readFromProperty) {
+            x = RED.util.getMessageProperty(ele, node.valueProperty);
+          }
+          return node.mapFunction(x);
         });
       }
       this.on('input', (msg) => {
