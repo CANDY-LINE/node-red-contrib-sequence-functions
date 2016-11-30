@@ -122,6 +122,7 @@ export default function(RED) {
       RED.nodes.createNode(this, n);
       this.name = n.name;
       this.topic = n.topic;
+      this.reduceRight = n.reduceRight;
       this.valueProperty = n.valueProperty || 'payload';
       if (n.reduceFunctionExpr) {
         this.parsedReduceFunction = Parser.parse(n.reduceFunctionExpr);
@@ -139,13 +140,19 @@ export default function(RED) {
           return val;
         };
       }
+      this.arrayReduce = this.reduceRight ? [].reduceRight : [].reduce;
       let node = this;
       function applyReduceFunction(msg) {
         let ary = msg.payload;
-        return ary.reduce((accu, ele) => {
-          let val = RED.util.getMessageProperty(ele, node.valueProperty);
-          return node.reduceFunction(accu, val);
-        }, null);
+        return node.arrayReduce.call(ary, (accu, ele) => {
+          let a = accu;
+          let x = ele;
+          x = RED.util.getMessageProperty(ele, node.valueProperty);
+          if (Object.prototype.toString.call(accu) === '[object Object]') {
+            a = RED.util.getMessageProperty(accu, node.valueProperty);
+          }
+          return node.reduceFunction(a, x);
+        });
       }
       this.on('input', (msg) => {
         if (!msg.payload) {
