@@ -18,7 +18,7 @@ export default function(RED) {
         return node.eventSequence.length > 0;
       }
       function appendEventSequnce(msg) {
-        if (!msg.payload || 'capture' in msg) {
+        if ((msg.payload === undefined) || 'capture' in msg) {
           return;
         }
         msg._ts = Date.now();
