@@ -40,6 +40,7 @@ export default function(RED) {
         appendEventSequnce(msg);
         if (this.onNewMessage || ('capture' in msg)) {
           this.send({
+            topic: msg.topic,
             payload: copy()
           });
         }
