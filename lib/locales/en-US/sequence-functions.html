@@ -2,7 +2,7 @@
 <p>A function that captures a sequence of messages into a single list.</p>
 <p>This node is different from the <code>join</code> node in that
 it never forgets the sent messages in the list while the given capturing conditions are met.</p>
-<p>The type of the capturing conditions can be:</p>
+<p>Here is a list of the capturing conditions:</p>
 <ul>
     <li>the list contains the fixed number (or less) of messages</li>
     <li>a message in the list can be retained within the given time of period in seconds</li>
@@ -14,4 +14,47 @@ it never forgets the sent messages in the list while the given capturing conditi
    <li>When a message with <code>msg.capture</code> property set is coming</li>
 </ul>
 <p>Regarding the last condition, be aware that this node doesn't append the <code>msg</code> into the list.</p>
+</script>
+
+<script type="text/x-red" data-help-name="map">
+<p>A function applied to a sequence of messages in a list(<code>msg.payload</code>) in order to transform each message,
+but never removes/append an element in the list.</p>
+<p>You can set a topic in <code>msg.topic</code> if necessary.</p>
+<p>This node regards the passed <code>msg.payload</code> is an array.
+If <code>capture</code> node creates the array, check <code>Read value from property</code> and
+specify the propery name in order to retrieve a propery value in each element object.</p>
+
+<p>The <code>Map function</code> expression syntax follows
+<a target="_blank" href="https://github.com/silentmatt/expr-eval#expression-syntax">
+Silent Matt's expr-eval module</a>.</p>
+<p>The variable <code>x</code> represents a current value to be evaluated.</p>
+</script>
+
+<script type="text/x-red" data-help-name="reduce">
+<p>A function applied to a sequence of messages in a list(<code>msg.payload</code>) in order to aggregate each message and to resolve a single data from the list.</p>
+<p>You can set a topic in <code>msg.topic</code> if necessary.</p>
+<p>This node regards the passed <code>msg.payload</code> is an array of string, numeric value or boolean value. Arrays and objects aren't expected to be included in the array.
+Use <code>map</code> node to transform such objects into string, numeric value or boolean value.</p>
+
+<p>The <code>Reduce function</code> expression syntax follows
+<a target="_blank" href="https://github.com/silentmatt/expr-eval#expression-syntax">
+Silent Matt's expr-eval module</a>.</p>
+<p>The variable <code>a</code> represents an accumulator value, and the variable <code>x</code> represents a current value to be evaluated.</p>
+</script>
+
+<script type="text/x-red" data-help-name="filter">
+<p>A function applied to a sequence of messages in a list(<code>msg.payload</code>) in order to filter each message and to create a filtered result list.</p>
+<p>You can set a topic in <code>msg.topic</code> if necessary.</p>
+<p>This node regards the passed <code>msg.payload</code> is an array of string, numeric value or boolean value. Arrays and objects aren't expected to be included in the array.
+Use <code>map</code> node to transform such objects into string, numeric value or boolean value.</p>
+
+<p>The filter rules are almost same to <code>switch</code> node. However,
+the evaluated value is not <code>msg.payload</code> object itself
+but each element in a list object stored in <code>msg.payload</code> property.
+All rules are used to test whether each element is remained or removed in the list.</p>
+<p>You can choose the rule evaluation condition:</p>
+<ul>
+   <li><code>Keep element if all rules are true</code> ... Remove an element when one of the rules is false (default)</li>
+   <li><code>Keep element if one of the rules is true</code> ... Remove an element when all rules are false</li>
+</ul>
 </script>
