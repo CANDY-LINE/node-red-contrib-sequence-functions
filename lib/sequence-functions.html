@@ -216,6 +216,13 @@
     <label for='node-input-name'><i class='fa fa-tag'></i> <span data-i18n='node-red:common.label.name'></span></label>
     <input type='text' id='node-input-name' data-i18n='[placeholder]node-red:common.label.name'>
   </div>
+  <div class='form-row'>
+    <label for='node-input-topic'>
+      <i class='fa fa-hashtag'></i>
+      <span data-i18n='sequence-functions.label.topic'></span>
+    </label>
+    <input type='text' id='node-input-topic' data-i18n='[placeholder]sequence-functions.placeholder.topic'>
+  </div>
   <div class='form-row node-input-rule-container-row'>
     <i class='fa fa-gear'></i> <span data-i18n='sequence-functions.label.ruleDescription'></span>
     <ol id='node-input-rule-container'></ol>
@@ -235,6 +242,7 @@
     category: 'function',
     defaults: {
       name: {value:''},
+      topic: { value : '', required: false },
       rules: {value:[{t:'eq', v:''}]},
       checkall: {value:'true', required:true}
     },

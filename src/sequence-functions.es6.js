@@ -172,6 +172,7 @@ export default function(RED) {
     constructor(n) {
       RED.nodes.createNode(this, n);
       this.name = n.name;
+      this.topic = n.topic;
       this.rules = n.rules || [];
       this.checkall = n.checkall || 'true';
 
@@ -253,7 +254,11 @@ export default function(RED) {
           msg.payload = [msg.payload];
         }
         try {
-          msg.payload = msg.payload.filter(applyFilter);
+          let result = msg.payload.filter(applyFilter);
+          this.send({
+            topic: this.topic || msg.topic,
+            payload: result
+          });
           this.send(msg);
         } catch(err) {
           RED.log.error(RED._('sequence-functions.errors.parserError', { error: e }));
