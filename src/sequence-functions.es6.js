@@ -167,4 +167,99 @@ export default function(RED) {
     }
   }
   RED.nodes.registerType('reduce', ReduceNode);
+
+  class FilterNode {
+    constructor(n) {
+      RED.nodes.createNode(this, n);
+      this.name = n.name;
+      this.rules = n.rules || [];
+      this.checkall = n.checkall || 'true';
+
+      let operators = {
+        'eq': (a, b) => { return a == b; },
+        'neq': (a, b) => { return a != b; },
+        'lt': (a, b) => { return a < b; },
+        'lte': (a, b) => { return a <= b; },
+        'gt': (a, b) => { return a > b; },
+        'gte': (a, b) => { return a >= b; },
+        'btwn': (a, b, c) => { return a >= b && a <= c; },
+        'cont': (a, b) => { return (a + '').indexOf(b) != -1; },
+        'regex': (a, b, c, d) => { return (a + '').match(new RegExp(b,d?'i':'')); },
+        'true': (a) => { return a === true; },
+        'false': (a) => { return a === false; },
+        'null': (a) => { return (typeof a === 'undefined' || a === null); },
+        'nnull': (a) => { return (typeof a !== 'undefined' && a !== null); },
+        'else': (a) => { return a === true; }
+      };
+
+      for (let i=0; i<this.rules.length; i+=1) {
+        let rule = this.rules[i];
+        if (!rule.vt) {
+          if (!isNaN(Number(rule.v))) {
+            rule.vt = 'num';
+          } else {
+            rule.vt = 'str';
+          }
+        }
+        if (rule.vt === 'num') {
+          if (!isNaN(Number(rule.v))) {
+            rule.v = Number(rule.v);
+          }
+        }
+        if (typeof rule.v2 !== 'undefined') {
+          if (!rule.v2t) {
+            if (!isNaN(Number(rule.v2))) {
+              rule.v2t = 'num';
+            } else {
+              rule.v2t = 'str';
+            }
+          }
+          if (rule.v2t === 'num') {
+            rule.v2 = Number(rule.v2);
+          }
+        }
+      }
+
+      let node = this;
+      function applyFilter(prop) {
+        var elseflag = true;
+        for (var i=0; i<node.rules.length; i+=1) {
+          var rule = node.rules[i];
+          var test = prop;
+          var v1,v2;
+          v1 = RED.util.evaluateNodeProperty(rule.v,rule.vt,node);
+          v2 = rule.v2;
+          if (typeof v2 !== 'undefined') {
+            v2 = RED.util.evaluateNodeProperty(rule.v2,rule.v2t,node);
+          }
+          if (rule.t == 'else') { test = elseflag; elseflag = true; }
+          if (operators[rule.t](test,v1,v2,rule.case)) {
+            elseflag = false;
+            if (node.checkall === 'false') {
+              return true;
+            }
+          } else {
+            return false;
+          }
+        }
+        return true;
+      }
+
+      this.on('input', (msg) => {
+        if (!msg.payload) {
+          return;
+        }
+        if (!Array.isArray(msg.payload)) {
+          msg.payload = [msg.payload];
+        }
+        try {
+          msg.payload = msg.payload.filter(applyFilter);
+          this.send(msg);
+        } catch(err) {
+          RED.log.error(RED._('sequence-functions.errors.parserError', { error: e }));
+        }
+      });
+    }
+  }
+  RED.nodes.registerType('filter', FilterNode);
 }

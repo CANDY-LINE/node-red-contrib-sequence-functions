@@ -22,7 +22,7 @@ describe('sequence-functions module', () => {
   it('should be successfully initialized', () => {
     let registerType = sandbox.stub(RED.nodes, 'registerType');
     eventProcessing(RED);
-    assert.equal(3, registerType.callCount);
+    assert.equal(4, registerType.callCount);
   });
 
   describe('CaptureNode', () => {
@@ -120,6 +120,38 @@ describe('sequence-functions module', () => {
         });
         assert.equal('my-name', node.name);
         assert.isDefined(node.reduceFunction);
+      });
+    });
+  });
+
+  describe('FilterNode', () => {
+    let FilterNode;
+    beforeEach(() => {
+      RED.nodes.createNode = t => {
+        t.status = () => {};
+        t.on = () => {};
+        t.send = () => {};
+      };
+      RED.nodes.registerType = (n, t) => {
+        if (n === 'filter') {
+          FilterNode = t;
+        }
+      };
+    });
+    afterEach(() => {
+      sandbox.restore();
+    });
+    describe('#constructor()', () => {
+      it('should be able to create a new FilterNode', () => {
+        eventProcessing(RED);
+        assert.isDefined(FilterNode);
+        let node = new FilterNode({
+          name: 'my-name',
+          checkall: 'true'
+        });
+        assert.equal('my-name', node.name);
+        assert.isDefined(node.rules);
+        assert.isDefined(node.checkall);
       });
     });
   });

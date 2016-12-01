@@ -13,7 +13,9 @@
       "trigger" : "Send the message:",
       "interval" : "Every `n` seconds:",
       "onNewMessage" : "Whenever a new message arrives:",
-      "triggerAnnotation" : "After a message with the `msg.capture` property set"
+      "triggerAnnotation" : "After a message with the `msg.capture` property set",
+      "rule": "rule",
+      "ruleDescription": "Each element of an array in msg.payload:"
     },
     "placeholder" : {
       "topic" : "(optional)",
@@ -27,6 +29,20 @@
     "errors" : {
       "parserError" : "[map node] Parser Error (__error__)",
       "unknown" : "[EventProcessing] Unknown Error (__error__)"
+    },
+    "and": "and",
+    "checkall": "Keep element if all rules are true",
+    "stopfirst": "Keep element if one of the rules is true",
+    "ignorecase": "ignore case",
+    "rules": {
+        "btwn":"is between",
+        "cont":"contains",
+        "regex":"matches regex",
+        "true":"is true",
+        "false":"is false",
+        "null":"is null",
+        "nnull":"is not null",
+        "else":"otherwise"
     }
   }
 }
