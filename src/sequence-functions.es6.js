@@ -54,7 +54,6 @@ export default function(RED) {
         this.triggerInterval = setInterval(() => {
           if (canTrigger()) {
             this.send({
-              topic: msg.topic,
               payload: copy()
             });
           }
