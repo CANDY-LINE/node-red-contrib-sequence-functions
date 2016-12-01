@@ -113,7 +113,7 @@ export default function(RED) {
         let result = applyMapFunction(msg);
         if (result) {
           this.send({
-            topic: this.topic,
+            topic: this.topic || msg.topic,
             payload: result
           });
         }
@@ -161,7 +161,7 @@ export default function(RED) {
         }
         let result = applyReduceFunction(msg);
         this.send({
-          topic: this.topic,
+          topic: this.topic || msg.topic,
           payload: result
         });
       });
