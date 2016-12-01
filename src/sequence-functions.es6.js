@@ -223,16 +223,16 @@ export default function(RED) {
       }
 
       let node = this;
-      function applyFilter(prop) {
+      function applyFilterBase(prop, evaluateNodeProperty) {
         var elseflag = true;
         for (var i=0; i<node.rules.length; i+=1) {
           var rule = node.rules[i];
           var test = prop;
           var v1,v2;
-          v1 = RED.util.evaluateNodeProperty(rule.v,rule.vt,node);
+          v1 = evaluateNodeProperty(rule.v,rule.vt);
           v2 = rule.v2;
           if (typeof v2 !== 'undefined') {
-            v2 = RED.util.evaluateNodeProperty(rule.v2,rule.v2t,node);
+            v2 = evaluateNodeProperty(rule.v2,rule.v2t);
           }
           if (rule.t == 'else') { test = elseflag; elseflag = true; }
           if (operators[rule.t](test,v1,v2,rule.case)) {
@@ -255,7 +255,12 @@ export default function(RED) {
           msg.payload = [msg.payload];
         }
         try {
-          let result = msg.payload.filter(applyFilter);
+          function evaluateNodeProperty(arg1, arg2) {
+            return RED.util.evaluateNodeProperty(arg1, arg2, node, msg);
+          }
+          let result = msg.payload.filter((prop) => {
+            return applyFilterBase(prop, evaluateNodeProperty);
+          });
           this.send({
             topic: this.topic || msg.topic,
             payload: result

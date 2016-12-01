@@ -316,10 +316,10 @@
           for (var d in operators) {
             selectField.append($('<option></option>').val(operators[d].v).text(operators[d].t));
           }
-          var valueField = $('<input/>',{class:'node-input-rule-value',type:'text',style:'margin-left: 5px;'}).appendTo(row).typedInput({default:'str',types:['flow','global','str','num']});
-          var btwnValueField = $('<input/>',{class:'node-input-rule-btwn-value',type:'text',style:'margin-left: 5px;'}).appendTo(row).typedInput({default:'num',types:['flow','global','str','num']});
+          var valueField = $('<input/>',{class:'node-input-rule-value',type:'text',style:'margin-left: 5px;'}).appendTo(row).typedInput({default:'str',types:['msg','flow','global','str','num']});
+          var btwnValueField = $('<input/>',{class:'node-input-rule-btwn-value',type:'text',style:'margin-left: 5px;'}).appendTo(row).typedInput({default:'num',types:['msg','flow','global','str','num']});
           var btwnAndLabel = $('<span/>',{class:'node-input-rule-btwn-label'}).text(' '+andLabel+' ').appendTo(row3);
-          var btwnValue2Field = $('<input/>',{class:'node-input-rule-btwn-value2',type:'text',style:'margin-left:2px;'}).appendTo(row3).typedInput({default:'num',types:['flow','global','str','num']});
+          var btwnValue2Field = $('<input/>',{class:'node-input-rule-btwn-value2',type:'text',style:'margin-left:2px;'}).appendTo(row3).typedInput({default:'num',types:['msg','flow','global','str','num']});
           var caseSensitive = $('<input/>',{id:'node-input-rule-case-'+i,class:'node-input-rule-case',type:'checkbox',style:'width:auto;vertical-align:top'}).appendTo(row2);
           $('<label/>',{for:'node-input-rule-case-'+i,style:'margin-left: 3px;'}).text(caseLabel).appendTo(row2);
           selectField.change(function() {
