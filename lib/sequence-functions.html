@@ -10,20 +10,20 @@
   <div class='form-row node-row-capture'>
     <label style='width: auto;'>
       <i class='fa fa-hand-rock-o'></i>
-      <span data-i18n='event-processing.label.capture'></span>
+      <span data-i18n='sequence-functions.label.capture'></span>
     </label>
     <ul>
       <li style='height: 40px;'>
         <label style='width: 280px;' for='node-input-size'>
-          <span data-i18n='event-processing.label.size'></span>
+          <span data-i18n='sequence-functions.label.size'></span>
         </label>
-        <input id='node-input-size' data-i18n='[placeholder]event-processing.placeholder.size' type='text' style='width: 75px;'>
+        <input id='node-input-size' data-i18n='[placeholder]sequence-functions.placeholder.size' type='text' style='width: 75px;'>
       </li>
       <li style='height: 40px;'>
         <label style='width: 280px;' for='node-input-period'>
-          <span data-i18n='event-processing.label.period'></span>
+          <span data-i18n='sequence-functions.label.period'></span>
         </label>
-        <input id='node-input-period' data-i18n='[placeholder]event-processing.placeholder.period' type='text' style='width: 75px;'>
+        <input id='node-input-period' data-i18n='[placeholder]sequence-functions.placeholder.period' type='text' style='width: 75px;'>
       </li>
     </ul>
   </div>
@@ -31,24 +31,24 @@
   <div class='form-row node-row-trigger'>
     <label style='width: auto;'>
       <i class='fa fa-share'></i>
-      <span data-i18n='event-processing.label.trigger'></span>
+      <span data-i18n='sequence-functions.label.trigger'></span>
     </label>
     <ul>
       <li style='height: 40px;'>
         <label style='width: 280px;' for='node-input-interval'>
-          <span data-i18n='event-processing.label.interval'></span>
+          <span data-i18n='sequence-functions.label.interval'></span>
         </label>
-        <input id='node-input-interval' data-i18n='[placeholder]event-processing.placeholder.interval' type='text' style='width: 75px;'>
+        <input id='node-input-interval' data-i18n='[placeholder]sequence-functions.placeholder.interval' type='text' style='width: 75px;'>
       </li>
       <li style='height: 40px;'>
         <label style='width: 280px;' for='node-input-onNewMessage'>
-          <span data-i18n='event-processing.label.onNewMessage'></span>
+          <span data-i18n='sequence-functions.label.onNewMessage'></span>
         </label>
         <input type='checkbox' id='node-input-onNewMessage' style='display: inline-block; width: auto; vertical-align: top;'>
       </li>
       <li style='height: 40px;'>
         <label style='width: auto; padding-top: 6px;'>
-          <span data-i18n='event-processing.label.triggerAnnotation'></span>
+          <span data-i18n='sequence-functions.label.triggerAnnotation'></span>
         </label>
       </li>
     </ul>
@@ -92,28 +92,28 @@
   <div class='form-row'>
     <label for='node-input-topic'>
       <i class='fa fa-hashtag'></i>
-      <span data-i18n='event-processing.label.topic'></span>
+      <span data-i18n='sequence-functions.label.topic'></span>
     </label>
-    <input type='text' id='node-input-topic' data-i18n='[placeholder]event-processing.placeholder.topic'>
+    <input type='text' id='node-input-topic' data-i18n='[placeholder]sequence-functions.placeholder.topic'>
   </div>
-  <div class="form-row" id="node-readFromProperty">
+  <div class='form-row' id='node-readFromProperty'>
     <label>&nbsp;</label>
-    <input type="checkbox" id="node-input-readFromProperty" style="display: inline-block; width: auto; vertical-align: top;">
-    <label for="node-input-readFromProperty" style="width: 70%;" data-i18n="event-processing.label.readFromProperty"></label>
+    <input type='checkbox' id='node-input-readFromProperty' style='display: inline-block; width: auto; vertical-align: top;'>
+    <label for='node-input-readFromProperty' style='width: 70%;' data-i18n='sequence-functions.label.readFromProperty'></label>
   </div>
-  <div class="form-row" id="node-valueProperty">
+  <div class='form-row' id='node-valueProperty'>
     <label for='node-input-valueProperty'>
       <i class='fa fa-file'></i>
-      <span data-i18n='event-processing.label.valueProperty'></span>
+      <span data-i18n='sequence-functions.label.valueProperty'></span>
     </label>
-    <input type='text' id='node-input-valueProperty' data-i18n='[placeholder]event-processing.placeholder.valueProperty'>
+    <input type='text' id='node-input-valueProperty' data-i18n='[placeholder]sequence-functions.placeholder.valueProperty'>
   </div>
-  <div class="form-row" id="node-mapFunctionExpr">
+  <div class='form-row' id='node-mapFunctionExpr'>
     <label for='node-input-mapFunctionExpr'>
       <i class='fa fa-cog'></i>
-      <span data-i18n='event-processing.label.mapFunctionExpr'></span>
+      <span data-i18n='sequence-functions.label.mapFunctionExpr'></span>
     </label>
-    <input type='text' id='node-input-mapFunctionExpr' style='width: 70%;' data-i18n='[placeholder]event-processing.placeholder.mapFunctionExpr'>
+    <input type='text' id='node-input-mapFunctionExpr' style='width: 70%;' data-i18n='[placeholder]sequence-functions.placeholder.mapFunctionExpr'>
   </div>
 </script>
 
@@ -138,16 +138,16 @@
       return this.name ? 'node_label_italic' : '';
     },
     oneditprepare: function() {
-      $("#node-input-valueProperty").typedInput({default:'msg',types:['msg']});
-      $("#node-input-mapFunctionExpr").typedInput({default:'string',types:[{
-        value: "string",
-        label: "f(x) ="
+      $('#node-input-valueProperty').typedInput({default:'msg',types:['msg']});
+      $('#node-input-mapFunctionExpr').typedInput({default:'string',types:[{
+        value: 'string',
+        label: 'f(x) ='
       }]});
-      if (!$("#node-input-readFromProperty").val()) {
-        $("#node-input-valueProperty").prop('disabled', true);
+      if (!$('#node-input-readFromProperty').val()) {
+        $('#node-input-valueProperty').prop('disabled', true);
       }
-      $("#node-input-readFromProperty").change(function() {
-        $("#node-input-valueProperty").prop('disabled', !$(this).is(":checked"));
+      $('#node-input-readFromProperty').change(function() {
+        $('#node-input-valueProperty').prop('disabled', !$(this).is(':checked'));
       });
     }
   });
@@ -165,21 +165,21 @@
   <div class='form-row'>
     <label for='node-input-topic'>
       <i class='fa fa-hashtag'></i>
-      <span data-i18n='event-processing.label.topic'></span>
+      <span data-i18n='sequence-functions.label.topic'></span>
     </label>
-    <input type='text' id='node-input-topic' data-i18n='[placeholder]event-processing.placeholder.topic'>
+    <input type='text' id='node-input-topic' data-i18n='[placeholder]sequence-functions.placeholder.topic'>
   </div>
-  <div class="form-row" id="node-reduceFunctionExpr">
+  <div class='form-row' id='node-reduceFunctionExpr'>
     <label for='node-input-reduceFunctionExpr'>
       <i class='fa fa-cog'></i>
-      <span data-i18n='event-processing.label.reduceFunctionExpr'></span>
+      <span data-i18n='sequence-functions.label.reduceFunctionExpr'></span>
     </label>
-    <input type='text' id='node-input-reduceFunctionExpr' style='width: 70%;' data-i18n='[placeholder]event-processing.placeholder.reduceFunctionExpr'>
+    <input type='text' id='node-input-reduceFunctionExpr' style='width: 70%;' data-i18n='[placeholder]sequence-functions.placeholder.reduceFunctionExpr'>
   </div>
-  <div class="form-row" id="node-reduceRight">
+  <div class='form-row' id='node-reduceRight'>
     <label>&nbsp;</label>
-    <input type="checkbox" id="node-input-reduceRight" style="display: inline-block; width: auto; vertical-align: top;">
-    <label for="node-input-reduceRight" style="width: 70%;" data-i18n="event-processing.label.reduceRight"></label>
+    <input type='checkbox' id='node-input-reduceRight' style='display: inline-block; width: auto; vertical-align: top;'>
+    <label for='node-input-reduceRight' style='width: 70%;' data-i18n='sequence-functions.label.reduceRight'></label>
   </div>
 </script>
 
@@ -203,10 +203,30 @@
       return this.name ? 'node_label_italic' : '';
     },
     oneditprepare: function() {
-      $("#node-input-reduceFunctionExpr").typedInput({default:'string',types:[{
-        value: "string",
-        label: "f(a,x) ="
+      $('#node-input-reduceFunctionExpr').typedInput({default:'string',types:[{
+        value: 'string',
+        label: 'f(a,x) ='
       }]});
     }
   });
+</script>
+
+<script type='text/x-red' data-template-name='filter'>
+  <div class='form-row'>
+    <label for='node-input-name'><i class='fa fa-tag'></i> <span data-i18n='common.label.name'></span></label>
+    <input type='text' id='node-input-name' data-i18n='[placeholder]common.label.name'>
+  </div>
+  <div class='form-row'>
+    <label for='node-input-name'><i class='fa fa-tag'></i> <span data-i18n='node-red:common.label.name'></span></label>
+    <input type='text' id='node-input-name' data-i18n='[placeholder]node-red:common.label.name'>
+  </div>
+  <div class='form-row node-input-rule-container-row'>
+    <ol id='node-input-rule-container'></ol>
+  </div>
+  <div class='form-row'>
+    <select id='node-input-checkall' style='width:100%; margin-right:5px;'>
+      <option value='true' data-i18n='sequence-functions.checkall'></option>
+      <option value='false' data-i18n='sequence-functions.stopfirst'></option>
+    </select>
+  </div>
 </script>

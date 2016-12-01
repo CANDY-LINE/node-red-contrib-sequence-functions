@@ -4,13 +4,13 @@ import 'source-map-support/register';
 import * as sinon from 'sinon';
 import { assert } from 'chai';
 import RED from 'node-red';
-import eventProcessing from '../lib/event-processing';
+import eventProcessing from '../lib/sequence-functions';
 
 let server = sinon.spy();
 let settings = sinon.spy();
 RED.init(server, settings);
 
-describe('event-processing module', () => {
+describe('sequence-functions module', () => {
   let sandbox;
   beforeEach(() => {
     sandbox = sinon.sandbox.create();

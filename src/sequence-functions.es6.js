@@ -83,7 +83,7 @@ export default function(RED) {
             return this.parsedMapFunction.evaluate({ x: val });
           };
         } catch (e) {
-          RED.log.error(RED._('event-processing.errors.parserError', { error: e }));
+          RED.log.error(RED._('sequence-functions.errors.parserError', { error: e }));
         }
       }
       if (!this.mapFunction) {
@@ -135,7 +135,7 @@ export default function(RED) {
             return this.parsedReduceFunction.evaluate({ a: accu, x: val });
           };
         } catch (e) {
-          RED.log.error(RED._('event-processing.errors.parserError', { error: e }));
+          RED.log.error(RED._('sequence-functions.errors.parserError', { error: e }));
         }
       }
       if (!this.reduceFunction) {

@@ -1,5 +1,5 @@
 {
-  "event-processing" : {
+  "sequence-functions" : {
     "label" : {
       "topic" : "Topic",
       "valueProperty" : "Value (x) Property",
