@@ -260,7 +260,6 @@ export default function(RED) {
             topic: this.topic || msg.topic,
             payload: result
           });
-          this.send(msg);
         } catch(err) {
           RED.log.error(RED._('sequence-functions.errors.parserError', { error: e }));
         }
