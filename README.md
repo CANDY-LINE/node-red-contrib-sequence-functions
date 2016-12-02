@@ -9,11 +9,15 @@ Sequence processing function Node-RED nodes including `map`, `reduce` and `filte
 
 There are 5 nodes in this project.
 
-1. `capture` node ... Capture and store data under the given conditions
-1. `map` node ... Provide `map` function
-1. `reduce` node ... Provide `reduce` function
-1. `filter` node ... Provide `filter` function
-1. `stats` node ... Provide `stats` function
+1. `capture` node ... Capture a message and append it into an array, emit the array with the given trigger conditions
+1. `stats` node ... Provide statistical processing function applied to an array in `msg.payload`
+1. `map` node ... Provide `map` function applied to an array in `msg.payload`
+1. `reduce` node ... Provide `reduce` function applied to an array in `msg.payload`
+1. `filter` node ... Provide `filter` function applied to an array in `msg.payload`
+
+Each node handles and manipulates an array in `msg.payload`.
+
+You can use existing `split` node and `function` node in conjunction with the above nodes in order to process a sequence of messages.
 
 ### Installation
 
