@@ -18,8 +18,14 @@ export default function(RED) {
       function canTrigger() {
         return node.eventSequence.length > 0;
       }
+      function isClear(msg) {
+        return ('clear' in msg) || (msg.topic === 'clear');
+      }
+      function isCapture(msg) {
+        return ('capture' in msg) || (msg.topic === 'capture');
+      }
       function appendEventSequnce(msg) {
-        if ((msg.payload === undefined) || 'capture' in msg) {
+        if ((msg.payload === undefined) || isCapture(msg)) {
           return;
         }
         msg._ts = Date.now();
@@ -38,8 +44,12 @@ export default function(RED) {
         });
       }
       this.on('input', (msg) => {
+        if (isClear(msg)) {
+          node.eventSequence = [];
+          return;
+        }
         appendEventSequnce(msg);
-        if (this.onNewMessage || ('capture' in msg)) {
+        if (this.onNewMessage || isCapture(msg)) {
           this.send({
             topic: msg.topic,
             payload: copy()
