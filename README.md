@@ -316,5 +316,5 @@ You can try the following flow for testing the node behaviors after installing t
 ```
 
 # Revision History
-* ?.?.?
+* 1.0.0
     - Initial release
