@@ -149,6 +149,9 @@ export default function(RED) {
       let node = this;
       function applyReduceFunction(msg) {
         let ary = msg.payload;
+        if (!ary.length || ary.length === 0) {
+          return null;
+        }
         return node.arrayReduce.call(ary, (a, x) => {
           return node.reduceFunction(a, x);
         });
