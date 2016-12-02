@@ -1,0 +1,67 @@
+{
+  "sequence-functions" : {
+    "label" : {
+      "topic" : "Topic",
+      "valueProperty" : "Value (x) Property",
+      "mapFunctionExpr" : "Map function expression",
+      "reduceFunctionExpr" : "Reduce function expression",
+      "reduceRight" : "Reduce right",
+      "readFromProperty" : "Read value from property",
+      "capture" : "Capture a message into a list:",
+      "size" : "With a fixed number of messages:",
+      "period" : "Within a given time period:",
+      "trigger" : "Send the message:",
+      "interval" : "Every `n` seconds:",
+      "onNewMessage" : "Whenever a new message arrives:",
+      "triggerAnnotation" : "After a message with the `msg.capture` property set",
+      "rule": "rule",
+      "ruleDescription": "Each element of an array in msg.payload:",
+      "statsFunction" : "Statistical method"
+    },
+    "placeholder" : {
+      "topic" : "(optional)",
+      "valueProperty" : "(default: payload)",
+      "mapFunctionExpr" : "(`x`=current value)",
+      "reduceFunctionExpr" : "(`a`=accumulator,`x`=current value)",
+      "size" : "count",
+      "period" : "second",
+      "interval" : "second"
+    },
+    "errors" : {
+      "parserError" : "[map node] Parser Error (__error__)",
+      "unknown" : "[EventProcessing] Unknown Error (__error__)"
+    },
+    "statsFunction" : {
+      "min" : "min",
+      "max" : "max",
+      "sum" : "sum (with floating point compensation)",
+      "sumSimple" : "sum",
+      "product" : "product",
+      "mean" : "mean",
+      "mode" : "mode",
+      "median" : "median",
+      "harmonicMean" : "harmonic mean",
+      "geometricMean" : "geometric mean",
+      "rootMeanSquare" : "root mean square",
+      "sampleSkewness" : "sample skewness",
+      "variance" : "variance",
+      "standardDeviation" : "standard deviation (population)",
+      "sampleStandardDeviation" : "sample standard deviation",
+      "medianAbsoluteDeviation" : "median absolute deviation"
+    },
+    "and": "and",
+    "checkall": "Keep element if all rules are true",
+    "stopfirst": "Keep element if one of the rules is true",
+    "ignorecase": "ignore case",
+    "rules": {
+        "btwn":"is between",
+        "cont":"contains",
+        "regex":"matches regex",
+        "true":"is true",
+        "false":"is false",
+        "null":"is null",
+        "nnull":"is not null",
+        "else":"otherwise"
+    }
+  }
+}

@@ -1,0 +1,488 @@
+<!-- capture -->
+<script type='text/x-red' data-template-name='capture'>
+  <div class='form-row'>
+    <label for='node-input-name'>
+      <i class='fa fa-tag'></i>
+      <span data-i18n='node-red:common.label.name'></span>
+    </label>
+    <input type='text' id='node-input-name' data-i18n='[placeholder]node-red:common.label.name'>
+  </div>
+  <div class='form-row node-row-capture'>
+    <label style='width: auto;'>
+      <i class='fa fa-hand-rock-o'></i>
+      <span data-i18n='sequence-functions.label.capture'></span>
+    </label>
+    <ul>
+      <li style='height: 40px;'>
+        <label style='width: 280px;' for='node-input-size'>
+          <span data-i18n='sequence-functions.label.size'></span>
+        </label>
+        <input id='node-input-size' data-i18n='[placeholder]sequence-functions.placeholder.size' type='text' style='width: 75px;'>
+      </li>
+      <li style='height: 40px;'>
+        <label style='width: 280px;' for='node-input-period'>
+          <span data-i18n='sequence-functions.label.period'></span>
+        </label>
+        <input id='node-input-period' data-i18n='[placeholder]sequence-functions.placeholder.period' type='text' style='width: 75px;'>
+      </li>
+    </ul>
+  </div>
+
+  <div class='form-row node-row-trigger'>
+    <label style='width: auto;'>
+      <i class='fa fa-share'></i>
+      <span data-i18n='sequence-functions.label.trigger'></span>
+    </label>
+    <ul>
+      <li style='height: 40px;'>
+        <label style='width: 280px;' for='node-input-interval'>
+          <span data-i18n='sequence-functions.label.interval'></span>
+        </label>
+        <input id='node-input-interval' data-i18n='[placeholder]sequence-functions.placeholder.interval' type='text' style='width: 75px;'>
+      </li>
+      <li style='height: 40px;'>
+        <label style='width: 280px;' for='node-input-onNewMessage'>
+          <span data-i18n='sequence-functions.label.onNewMessage'></span>
+        </label>
+        <input type='checkbox' id='node-input-onNewMessage' style='display: inline-block; width: auto; vertical-align: top;'>
+      </li>
+      <li style='height: 40px;'>
+        <label style='width: auto; padding-top: 6px;'>
+          <span data-i18n='sequence-functions.label.triggerAnnotation'></span>
+        </label>
+      </li>
+    </ul>
+  </div>
+</script>
+
+<script type='text/javascript'>
+  RED.nodes.registerType('capture',{
+    category: 'function',
+    defaults: {
+      name: { name: '' },
+      size: { value : 10, required: false },
+      period: { value: 30, required: false },
+      interval: { value : 5, required: false },
+      onNewMessage: { value: false, required: false }
+    },
+    color: 'Gold',
+    inputs: 1,
+    outputs: 1,
+    icon: 'join.png',
+    label: function() {
+      return this.name || 'capture';
+    },
+    labelStyle: function() {
+      return this.name ? 'node_label_italic' : '';
+    },
+    oneditprepare: function() {
+    }
+  });
+</script>
+
+<!-- map -->
+<script type='text/x-red' data-template-name='map'>
+  <div class='form-row'>
+    <label for='node-input-name'>
+      <i class='fa fa-tag'></i>
+      <span data-i18n='node-red:common.label.name'></span>
+    </label>
+    <input type='text' id='node-input-name' data-i18n='[placeholder]node-red:common.label.name'>
+  </div>
+  <div class='form-row'>
+    <label for='node-input-topic'>
+      <i class='fa fa-hashtag'></i>
+      <span data-i18n='sequence-functions.label.topic'></span>
+    </label>
+    <input type='text' id='node-input-topic' data-i18n='[placeholder]sequence-functions.placeholder.topic'>
+  </div>
+  <div class='form-row' id='node-readFromProperty'>
+    <label>&nbsp;</label>
+    <input type='checkbox' id='node-input-readFromProperty' style='display: inline-block; width: auto; vertical-align: top;'>
+    <label for='node-input-readFromProperty' style='width: 70%;' data-i18n='sequence-functions.label.readFromProperty'></label>
+  </div>
+  <div class='form-row' id='node-valueProperty'>
+    <label for='node-input-valueProperty'>
+      <i class='fa fa-file'></i>
+      <span data-i18n='sequence-functions.label.valueProperty'></span>
+    </label>
+    <input type='text' id='node-input-valueProperty' data-i18n='[placeholder]sequence-functions.placeholder.valueProperty'>
+  </div>
+  <div class='form-row' id='node-mapFunctionExpr'>
+    <label for='node-input-mapFunctionExpr'>
+      <i class='fa fa-cog'></i>
+      <span data-i18n='sequence-functions.label.mapFunctionExpr'></span>
+    </label>
+    <input type='text' id='node-input-mapFunctionExpr' style='width: 70%;' data-i18n='[placeholder]sequence-functions.placeholder.mapFunctionExpr'>
+  </div>
+</script>
+
+<script type='text/javascript'>
+  RED.nodes.registerType('map',{
+    category: 'function',
+    defaults: {
+      name: { name: '' },
+      topic: { value : '', required: false },
+      valueProperty: { value: 'payload', required: false },
+      readFromProperty: { value: false, required: false },
+      mapFunctionExpr: { value: '', required: false }
+    },
+    color: 'Gold',
+    inputs: 1,
+    outputs: 1,
+    icon: 'swap.png',
+    label: function() {
+      return this.name || 'map';
+    },
+    labelStyle: function() {
+      return this.name ? 'node_label_italic' : '';
+    },
+    oneditprepare: function() {
+      $('#node-input-valueProperty').typedInput({default:'msg',types:['msg']});
+      $('#node-input-mapFunctionExpr').typedInput({default:'string',types:[{
+        value: 'string',
+        label: 'f(x) ='
+      }]});
+      if (!$('#node-input-readFromProperty').val()) {
+        $('#node-input-valueProperty').prop('disabled', true);
+      }
+      $('#node-input-readFromProperty').change(function() {
+        $('#node-input-valueProperty').prop('disabled', !$(this).is(':checked'));
+      });
+    }
+  });
+</script>
+
+<!-- reduce -->
+<script type='text/x-red' data-template-name='reduce'>
+  <div class='form-row'>
+    <label for='node-input-name'>
+      <i class='fa fa-tag'></i>
+      <span data-i18n='node-red:common.label.name'></span>
+    </label>
+    <input type='text' id='node-input-name' data-i18n='[placeholder]node-red:common.label.name'>
+  </div>
+  <div class='form-row'>
+    <label for='node-input-topic'>
+      <i class='fa fa-hashtag'></i>
+      <span data-i18n='sequence-functions.label.topic'></span>
+    </label>
+    <input type='text' id='node-input-topic' data-i18n='[placeholder]sequence-functions.placeholder.topic'>
+  </div>
+  <div class='form-row' id='node-reduceFunctionExpr'>
+    <label for='node-input-reduceFunctionExpr'>
+      <i class='fa fa-cog'></i>
+      <span data-i18n='sequence-functions.label.reduceFunctionExpr'></span>
+    </label>
+    <input type='text' id='node-input-reduceFunctionExpr' style='width: 70%;' data-i18n='[placeholder]sequence-functions.placeholder.reduceFunctionExpr'>
+  </div>
+  <div class='form-row' id='node-reduceRight'>
+    <label>&nbsp;</label>
+    <input type='checkbox' id='node-input-reduceRight' style='display: inline-block; width: auto; vertical-align: top;'>
+    <label for='node-input-reduceRight' style='width: 70%;' data-i18n='sequence-functions.label.reduceRight'></label>
+  </div>
+</script>
+
+<script type='text/javascript'>
+  RED.nodes.registerType('reduce',{
+    category: 'function',
+    defaults: {
+      name: { name: '' },
+      topic: { value : '', required: false },
+      reduceFunctionExpr: { value: '', required: false },
+      reduceRight: { value : false, required: false },
+    },
+    color: 'Gold',
+    inputs: 1,
+    outputs: 1,
+    icon: 'function.png',
+    label: function() {
+      return this.name || 'reduce';
+    },
+    labelStyle: function() {
+      return this.name ? 'node_label_italic' : '';
+    },
+    oneditprepare: function() {
+      $('#node-input-reduceFunctionExpr').typedInput({default:'string',types:[{
+        value: 'string',
+        label: 'f(a,x) ='
+      }]});
+    }
+  });
+</script>
+
+<!-- stats -->
+<script type='text/x-red' data-template-name='stats'>
+  <div class='form-row'>
+    <label for='node-input-name'>
+      <i class='fa fa-tag'></i>
+      <span data-i18n='node-red:common.label.name'></span>
+    </label>
+    <input type='text' id='node-input-name' data-i18n='[placeholder]node-red:common.label.name'>
+  </div>
+  <div class='form-row'>
+    <label for='node-input-topic'>
+      <i class='fa fa-hashtag'></i>
+      <span data-i18n='sequence-functions.label.topic'></span>
+    </label>
+    <input type='text' id='node-input-topic' data-i18n='[placeholder]sequence-functions.placeholder.topic'>
+  </div>
+  <div class='form-row' id='node-statsFunction'>
+    <label for='node-input-statsFunction'>
+      <i class='fa fa-cog'></i>
+      <span data-i18n='sequence-functions.label.statsFunction'></span>
+    </label>
+    <select id='node-input-statsFunction'>
+      <option value='min' data-i18n='sequence-functions.statsFunction.min'></option>
+      <option value='max' data-i18n='sequence-functions.statsFunction.max'></option>
+      <option value='sum' data-i18n='sequence-functions.statsFunction.sum'></option>
+      <option value='sumSimple' data-i18n='sequence-functions.statsFunction.sumSimple'></option>
+      <option value='product' data-i18n='sequence-functions.statsFunction.product'></option>
+      <option value='mean' data-i18n='sequence-functions.statsFunction.mean'></option>
+      <option value='mode' data-i18n='sequence-functions.statsFunction.mode'></option>
+      <option value='median' data-i18n='sequence-functions.statsFunction.median'></option>
+      <option value='harmonicMean' data-i18n='sequence-functions.statsFunction.harmonicMean'></option>
+      <option value='geometricMean' data-i18n='sequence-functions.statsFunction.geometricMean'></option>
+      <option value='rootMeanSquare' data-i18n='sequence-functions.statsFunction.rootMeanSquare'></option>
+      <option value='sampleSkewness' data-i18n='sequence-functions.statsFunction.sampleSkewness'></option>
+      <option value='variance' data-i18n='sequence-functions.statsFunction.variance'></option>
+      <option value='standardDeviation' data-i18n='sequence-functions.statsFunction.standardDeviation'></option>
+      <option value='sampleStandardDeviation' data-i18n='sequence-functions.statsFunction.sampleStandardDeviation'></option>
+      <option value='medianAbsoluteDeviation' data-i18n='sequence-functions.statsFunction.medianAbsoluteDeviation'></option>
+    </select>
+  </div>
+</script>
+
+<script type='text/javascript'>
+  RED.nodes.registerType('stats',{
+    category: 'function',
+    defaults: {
+      name: { name: '' },
+      topic: { value : '', required: false },
+      statsFunction: { value: 'mean', required: true },
+    },
+    color: 'Gold',
+    inputs: 1,
+    outputs: 1,
+    icon: 'function.png',
+    label: function() {
+      return this.name || ('stats:' + this.statsFunction);
+    },
+    labelStyle: function() {
+      return this.name ? 'node_label_italic' : '';
+    },
+    oneditprepare: function() {
+    }
+  });
+</script>
+
+<!-- filter -->
+<script type='text/x-red' data-template-name='filter'>
+  <div class='form-row'>
+    <label for='node-input-name'><i class='fa fa-tag'></i> <span data-i18n='node-red:common.label.name'></span></label>
+    <input type='text' id='node-input-name' data-i18n='[placeholder]node-red:common.label.name'>
+  </div>
+  <div class='form-row'>
+    <label for='node-input-topic'>
+      <i class='fa fa-hashtag'></i>
+      <span data-i18n='sequence-functions.label.topic'></span>
+    </label>
+    <input type='text' id='node-input-topic' data-i18n='[placeholder]sequence-functions.placeholder.topic'>
+  </div>
+  <div class='form-row node-input-rule-container-row'>
+    <i class='fa fa-gear'></i> <span data-i18n='sequence-functions.label.ruleDescription'></span>
+    <ol id='node-input-rule-container'></ol>
+  </div>
+  <div class='form-row'>
+    <select id='node-input-checkall' style='width:100%; margin-right:5px;'>
+      <option value='true' data-i18n='sequence-functions.checkall'></option>
+      <option value='false' data-i18n='sequence-functions.stopfirst'></option>
+    </select>
+  </div>
+</script>
+
+
+<script type='text/javascript'>
+  RED.nodes.registerType('filter', {
+    color: 'Gold',
+    category: 'function',
+    defaults: {
+      name: {value:''},
+      topic: { value : '', required: false },
+      rules: {value:[{t:'eq', v:''}]},
+      checkall: {value:'true', required:true}
+    },
+    inputs: 1,
+    outputs: 1,
+    icon: 'function.png',
+    label: function() {
+      return this.name||'filter';
+    },
+    oneditprepare: function() {
+      var node = this;
+
+      var operators = [
+        {v:'eq',t:'=='},
+        {v:'neq',t:'!='},
+        {v:'lt',t:'<'},
+        {v:'lte',t:'<='},
+        {v:'gt',t:'>'},
+        {v:'gte',t:'>='},
+        {v:'btwn',t:this._('sequence-functions.rules.btwn')},
+        {v:'cont',t:this._('sequence-functions.rules.cont')},
+        {v:'regex',t:this._('sequence-functions.rules.regex')},
+        {v:'true',t:this._('sequence-functions.rules.true')},
+        {v:'false',t:this._('sequence-functions.rules.false')},
+        {v:'null',t:this._('sequence-functions.rules.null')},
+        {v:'nnull',t:this._('sequence-functions.rules.nnull')},
+        {v:'else',t:this._('sequence-functions.rules.else')}
+      ];
+
+      var andLabel = this._('sequence-functions.and');
+      var caseLabel = this._('sequence-functions.ignorecase');
+
+      function resizeRule(rule) {
+        var newWidth = rule.width();
+        var selectField = rule.find('select');
+        var type = selectField.val()||'';
+        var valueField = rule.find('.node-input-rule-value');
+        var btwnField1 = rule.find('.node-input-rule-btwn-value');
+        var btwnField2 = rule.find('.node-input-rule-btwn-value2');
+        var selectWidth;
+        if (type.length < 4) {
+          selectWidth = 60;
+        } else if (type === 'regex') {
+          selectWidth = 147;
+        } else {
+          selectWidth = 120;
+        }
+        selectField.width(selectWidth);
+        if (type === 'btwn') {
+          btwnField1.typedInput('width',(newWidth-selectWidth-30));
+          btwnField2.typedInput('width',(newWidth-selectWidth-30));
+        } else {
+          if (type === 'true' || type === 'false' || type === 'null' || type === 'nnull' || type === 'else') {
+            // valueField.hide();
+          } else {
+            valueField.typedInput('width',(newWidth-selectWidth-30));
+          }
+        }
+      }
+
+      $('#node-input-rule-container').css('min-height','250px').css('min-width','450px').editableList({
+        addItem: function(container,i,opt) {
+          var rule = opt;
+          if (!rule.hasOwnProperty('t')) {
+            rule.t = 'eq';
+          }
+          var row = $('<div/>').appendTo(container);
+          var row2 = $('<div/>',{style:'padding-top: 5px; padding-left: 175px;'}).appendTo(container);
+          var row3 = $('<div/>',{style:'padding-top: 5px; padding-left: 102px;'}).appendTo(container);
+          var selectField = $('<select/>',{style:'width:120px; margin-left: 5px; text-align: center;'}).appendTo(row);
+          for (var d in operators) {
+            selectField.append($('<option></option>').val(operators[d].v).text(operators[d].t));
+          }
+          var valueField = $('<input/>',{class:'node-input-rule-value',type:'text',style:'margin-left: 5px;'}).appendTo(row).typedInput({default:'str',types:['msg','flow','global','str','num']});
+          var btwnValueField = $('<input/>',{class:'node-input-rule-btwn-value',type:'text',style:'margin-left: 5px;'}).appendTo(row).typedInput({default:'num',types:['msg','flow','global','str','num']});
+          var btwnAndLabel = $('<span/>',{class:'node-input-rule-btwn-label'}).text(' '+andLabel+' ').appendTo(row3);
+          var btwnValue2Field = $('<input/>',{class:'node-input-rule-btwn-value2',type:'text',style:'margin-left:2px;'}).appendTo(row3).typedInput({default:'num',types:['msg','flow','global','str','num']});
+          var caseSensitive = $('<input/>',{id:'node-input-rule-case-'+i,class:'node-input-rule-case',type:'checkbox',style:'width:auto;vertical-align:top'}).appendTo(row2);
+          $('<label/>',{for:'node-input-rule-case-'+i,style:'margin-left: 3px;'}).text(caseLabel).appendTo(row2);
+          selectField.change(function() {
+            resizeRule(container);
+            var type = selectField.val();
+            if (type === 'btwn') {
+              valueField.typedInput('hide');
+              btwnValueField.typedInput('show');
+            } else {
+              btwnValueField.typedInput('hide');
+              if (type === 'true' || type === 'false' || type === 'null' || type === 'nnull' || type === 'else') {
+                valueField.typedInput('hide');
+              } else {
+                valueField.typedInput('show');
+              }
+            }
+            if (type === 'regex') {
+              row2.show();
+              row3.hide();
+            } else if (type === 'btwn'){
+              row2.hide();
+              row3.show();
+            } else {
+              row2.hide();
+              row3.hide();
+            }
+          });
+          selectField.val(rule.t);
+          if (rule.t == 'btwn') {
+            btwnValueField.typedInput('value',rule.v);
+            btwnValueField.typedInput('type',rule.vt||'num');
+            btwnValue2Field.typedInput('value',rule.v2);
+            btwnValue2Field.typedInput('type',rule.v2t||'num');
+          } else if (typeof rule.v != 'undefined') {
+            valueField.typedInput('value',rule.v);
+            valueField.typedInput('type',rule.vt||'str');
+          }
+          if (rule.case) {
+            caseSensitive.prop('checked',true);
+          } else {
+            caseSensitive.prop('checked',false);
+          }
+          selectField.change();
+        },
+        removeItem: function(opt) {
+          var rules = $('#node-input-rule-container').editableList('items');
+          rules.each(function(i) { $(this).find('.node-input-rule-index').html(i+1); });
+        },
+        resizeItem: resizeRule,
+        sortItems: function(rules) {
+          var rules = $('#node-input-rule-container').editableList('items');
+          rules.each(function(i) { $(this).find('.node-input-rule-index').html(i+1); });
+        },
+        sortable: true,
+        removable: true
+      });
+
+      for (var i=0;i<this.rules.length;i++) {
+        var rule = this.rules[i];
+        $('#node-input-rule-container').editableList('addItem',rule);
+      }
+    },
+    oneditsave: function() {
+      var rules = $('#node-input-rule-container').editableList('items');
+      var ruleset;
+      var node = this;
+      node.rules= [];
+      rules.each(function(i) {
+        var rule = $(this);
+        var type = rule.find('select').val();
+        var r = {t:type};
+        if (!(type === 'true' || type === 'false' || type === 'null' || type === 'nnull' || type === 'else')) {
+          if (type === 'btwn') {
+            r.v = rule.find('.node-input-rule-btwn-value').typedInput('value');
+            r.vt = rule.find('.node-input-rule-btwn-value').typedInput('type');
+            r.v2 = rule.find('.node-input-rule-btwn-value2').typedInput('value');
+            r.v2t = rule.find('.node-input-rule-btwn-value2').typedInput('type');
+          } else {
+            r.v = rule.find('.node-input-rule-value').typedInput('value');
+            r.vt = rule.find('.node-input-rule-value').typedInput('type');
+          }
+          if (type === 'regex') {
+            r.case = rule.find('.node-input-rule-case').prop('checked');
+          }
+        }
+        node.rules.push(r);
+      });
+    },
+    oneditresize: function(size) {
+      var rows = $('#dialog-form>div:not(.node-input-rule-container-row)');
+      var height = size.height;
+      for (var i=0;i<rows.size();i++) {
+        height -= $(rows[i]).outerHeight(true);
+      }
+      var editorRow = $('#dialog-form>div.node-input-rule-container-row');
+      height -= (parseInt(editorRow.css('marginTop'))+parseInt(editorRow.css('marginBottom')));
+      $('#node-input-rule-container').editableList('height',height);
+    }
+  });
+</script>

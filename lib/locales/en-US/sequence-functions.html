@@ -1,0 +1,96 @@
+<script type="text/x-red" data-help-name="capture">
+<p>A function that captures a sequence of messages into a single list.</p>
+<p>This node is different from the <code>join</code> node in that
+it never forgets the sent messages in the list while the given capturing conditions are met.</p>
+<p>Here is a list of the capturing conditions:</p>
+<ul>
+    <li>the list contains the fixed number (or less) of messages</li>
+    <li>a message in the list can be retained within the given time of period in seconds</li>
+</ul>
+<p>You can also configure the trigger conditions, which show when the list is emitted to the following node.</p>
+<ul>
+   <li>Every <code>n</code> seconds (but nothing is emitted when the list is empty)</li>
+   <li>Whenever a new message is coming</li>
+   <li>When a message with <code>msg.capture</code> property set is coming</li>
+   <li>When a message with <code>msg.tpoic</code> property having <code>capture</code> value is coming</li>
+</ul>
+<p>Regarding the last condition, be aware that this node doesn't append the <code>msg</code> into the list.</p>
+<p>You can flush all captured messages in the node by sending a message with <code>msg.clear</code> property set or
+<code>msg.tpoic</code> property having <code>clear</code> value.</p>
+<p>Alternatively, you can set
+</script>
+
+<script type="text/x-red" data-help-name="map">
+<p>A function applied to a sequence of messages in a list(<code>msg.payload</code>) in order to transform each message,
+but never removes/append an element in the list.</p>
+<p>You can set a topic in <code>msg.topic</code> if necessary.</p>
+<p>This node regards the passed <code>msg.payload</code> is an array.
+If <code>capture</code> node creates the array, check <code>Read value from property</code> and
+specify the propery name in order to retrieve a propery value in each element object.</p>
+
+<p>The <code>Map function</code> expression syntax follows
+<a target="_blank" href="https://github.com/silentmatt/expr-eval#expression-syntax">
+Silent Matt's expr-eval module</a>.</p>
+<p>The variable <code>x</code> represents a current value to be evaluated.</p>
+</script>
+
+<script type="text/x-red" data-help-name="reduce">
+<p>A function applied to a sequence of messages in a list(<code>msg.payload</code>) in order to aggregate each message and to resolve a single data from the list.</p>
+<p>You can set a topic in <code>msg.topic</code> if necessary.</p>
+<p>This node regards the passed <code>msg.payload</code> is an array of string, numeric value or boolean value. Arrays and objects aren't expected to be included in the array.
+Use <code>map</code> node to transform such an object into string, numeric value or boolean value.</p>
+<p>If the passed array length is 1, this node emits the first element of the array in <code>msg.payload</code>. Hence, the reduce function is skipped.</p>
+<p>If the passed array is empty, this node emits a message with <code>payload</code> property being <code>null</code>.</p>
+
+<p>The <code>Reduce function</code> expression syntax follows
+<a target="_blank" href="https://github.com/silentmatt/expr-eval#expression-syntax">
+Silent Matt's expr-eval module</a>.</p>
+<p>The variable <code>a</code> represents an accumulator value, and the variable <code>x</code> represents a current value to be evaluated.</p>
+</script>
+
+<script type="text/x-red" data-help-name="filter">
+<p>A function applied to a sequence of messages in a list(<code>msg.payload</code>) in order to filter each message and to create a filtered result list.</p>
+<p>You can set a topic in <code>msg.topic</code> if necessary.</p>
+<p>This node regards the passed <code>msg.payload</code> is an array of string, numeric value or boolean value. Arrays and objects aren't expected to be included in the array.
+Use <code>map</code> node to transform such an object into string, numeric value or boolean value.</p>
+
+<p>The filter rules are almost same to <code>switch</code> node. However,
+the evaluated value is not <code>msg.payload</code> object itself
+but each element in a list object stored in <code>msg.payload</code> property.
+All rules are used to test whether each element is remained or removed in the list.</p>
+<p>You can choose the rule evaluation condition:</p>
+<ul>
+   <li><code>Keep element if all rules are true</code> ... Remove an element when one of the rules is false (default)</li>
+   <li><code>Keep element if one of the rules is true</code> ... Remove an element when all rules are false</li>
+</ul>
+</script>
+
+<script type="text/x-red" data-help-name="stats">
+<p>A function applied to a sequence of messages in a list(<code>msg.payload</code>) in order to perform statistical processing.</p>
+<p>You can set a topic in <code>msg.topic</code> if necessary.</p>
+<p>This node regards the passed <code>msg.payload</code> is an array of numeric value. Arrays and objects aren't expected to be included in the array.
+Use <code>map</code> node to transform such an object into string, numeric value or boolean value.</p>
+
+<p>The supported statistical methods are:</p>
+<ul>
+   <li><code>min</code></li>
+   <li><code>max</code></li>
+   <li><code>sum</code></li>
+   <li><code>sumSimple</code></li>
+   <li><code>product</code></li>
+   <li><code>mean</code></li>
+   <li><code>harmonicMean</code></li>
+   <li><code>geometricMean</code></li>
+   <li><code>rootMeanSquare</code></li>
+   <li><code>sampleSkewness</code></li>
+   <li><code>variance</code></li>
+   <li><code>standardDeviation</code></li>
+   <li><code>sampleStandardDeviation</code></li>
+   <li><code>medianAbsoluteDeviation</code></li>
+</ul>
+
+<p>The underlying statistics library is
+<a target="_blank" href="https://github.com/simple-statistics/simple-statistics">
+simple-statistics module</a>. Please refer to the
+<a target="_blank" href="http://simplestatistics.org/docs/">document</a> for the method detail.</p>
+</script>
