@@ -1,6 +1,7 @@
 'use strict';
 
 import { Parser } from 'expr-eval';
+import statistics from 'simple-statistics';
 
 export default function(RED) {
 
@@ -272,4 +273,27 @@ export default function(RED) {
     }
   }
   RED.nodes.registerType('filter', FilterNode);
+
+  class StatsNode {
+    constructor(n) {
+      RED.nodes.createNode(this, n);
+      this.name = n.name;
+      this.topic = n.topic;
+      this.statsFunction = n.statsFunction;
+      this.on('input', (msg) => {
+        if (!msg.payload) {
+          return;
+        }
+        if (!Array.isArray(msg.payload)) {
+          msg.payload = [msg.payload];
+        }
+        let result = statistics[this.statsFunction](msg.payload);
+        this.send({
+          topic: this.topic || msg.topic,
+          payload: result
+        });
+      });
+    }
+  }
+  RED.nodes.registerType('stats', StatsNode);
 }

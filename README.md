@@ -7,14 +7,13 @@ Sequence Processing function Node-RED nodes
 
 Sequence processing function Node-RED nodes including `map`, `reduce` and `filter`.
 
-There are 4 nodes in this project.
+There are 5 nodes in this project.
 
 1. `capture` node ... Capture and store data under the given conditions
 1. `map` node ... Provide `map` function
 1. `reduce` node ... Provide `reduce` function
 1. `filter` node ... Provide `filter` function
-
-These functions are useful when you process and evaluate the event message stream on Node-RED in conjunction with [`node-red-contrib-cache`](https://www.npmjs.com/package/node-red-contrib-cache) and [`node-red-contrib-statistics`](https://www.npmjs.com/package/node-red-contrib-statistics).
+1. `stats` node ... Provide `stats` function
 
 ### Installation
 

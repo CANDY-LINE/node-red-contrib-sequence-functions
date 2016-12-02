@@ -211,6 +211,72 @@
   });
 </script>
 
+<!-- stats -->
+<script type='text/x-red' data-template-name='stats'>
+  <div class='form-row'>
+    <label for='node-input-name'>
+      <i class='fa fa-tag'></i>
+      <span data-i18n='node-red:common.label.name'></span>
+    </label>
+    <input type='text' id='node-input-name' data-i18n='[placeholder]node-red:common.label.name'>
+  </div>
+  <div class='form-row'>
+    <label for='node-input-topic'>
+      <i class='fa fa-hashtag'></i>
+      <span data-i18n='sequence-functions.label.topic'></span>
+    </label>
+    <input type='text' id='node-input-topic' data-i18n='[placeholder]sequence-functions.placeholder.topic'>
+  </div>
+  <div class='form-row' id='node-statsFunction'>
+    <label for='node-input-statsFunction'>
+      <i class='fa fa-cog'></i>
+      <span data-i18n='sequence-functions.label.statsFunction'></span>
+    </label>
+    <select id='node-input-statsFunction'>
+      <option value='min' data-i18n='sequence-functions.statsFunction.min'></option>
+      <option value='max' data-i18n='sequence-functions.statsFunction.max'></option>
+      <option value='sum' data-i18n='sequence-functions.statsFunction.sum'></option>
+      <option value='sumSimple' data-i18n='sequence-functions.statsFunction.sumSimple'></option>
+      <option value='product' data-i18n='sequence-functions.statsFunction.product'></option>
+      <option value='mean' data-i18n='sequence-functions.statsFunction.mean'></option>
+      <option value='mode' data-i18n='sequence-functions.statsFunction.mode'></option>
+      <option value='median' data-i18n='sequence-functions.statsFunction.median'></option>
+      <option value='harmonicMean' data-i18n='sequence-functions.statsFunction.harmonicMean'></option>
+      <option value='geometricMean' data-i18n='sequence-functions.statsFunction.geometricMean'></option>
+      <option value='rootMeanSquare' data-i18n='sequence-functions.statsFunction.rootMeanSquare'></option>
+      <option value='sampleSkewness' data-i18n='sequence-functions.statsFunction.sampleSkewness'></option>
+      <option value='variance' data-i18n='sequence-functions.statsFunction.variance'></option>
+      <option value='standardDeviation' data-i18n='sequence-functions.statsFunction.standardDeviation'></option>
+      <option value='sampleStandardDeviation' data-i18n='sequence-functions.statsFunction.sampleStandardDeviation'></option>
+      <option value='medianAbsoluteDeviation' data-i18n='sequence-functions.statsFunction.medianAbsoluteDeviation'></option>
+    </select>
+  </div>
+</script>
+
+<script type='text/javascript'>
+  RED.nodes.registerType('stats',{
+    category: 'function',
+    defaults: {
+      name: { name: '' },
+      topic: { value : '', required: false },
+      statsFunction: { value: 'mean', required: true },
+    },
+    color: 'Gold',
+    inputs: 1,
+    outputs: 1,
+    icon: 'function.png',
+    label: function() {
+      return this.name || 'stats';
+    },
+    labelStyle: function() {
+      return this.name ? 'node_label_italic' : '';
+    },
+    oneditprepare: function() {
+    }
+  });
+</script>
+
+<!-- filter -->
 <script type='text/x-red' data-template-name='filter'>
   <div class='form-row'>
     <label for='node-input-name'><i class='fa fa-tag'></i> <span data-i18n='node-red:common.label.name'></span></label>

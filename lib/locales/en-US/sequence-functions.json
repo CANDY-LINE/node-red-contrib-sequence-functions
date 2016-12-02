@@ -15,7 +15,8 @@
       "onNewMessage" : "Whenever a new message arrives:",
       "triggerAnnotation" : "After a message with the `msg.capture` property set",
       "rule": "rule",
-      "ruleDescription": "Each element of an array in msg.payload:"
+      "ruleDescription": "Each element of an array in msg.payload:",
+      "statsFunction" : "Statistical method"
     },
     "placeholder" : {
       "topic" : "(optional)",
@@ -29,6 +30,24 @@
     "errors" : {
       "parserError" : "[map node] Parser Error (__error__)",
       "unknown" : "[EventProcessing] Unknown Error (__error__)"
+    },
+    "statsFunction" : {
+      "min" : "min",
+      "max" : "max",
+      "sum" : "sum (with floating point compensation)",
+      "sumSimple" : "sum",
+      "product" : "product",
+      "mean" : "mean",
+      "mode" : "mode",
+      "median" : "median",
+      "harmonicMean" : "harmonic mean",
+      "geometricMean" : "geometric mean",
+      "rootMeanSquare" : "root mean square",
+      "sampleSkewness" : "sample skewness",
+      "variance" : "variance",
+      "standardDeviation" : "standard deviation (population)",
+      "sampleStandardDeviation" : "sample standard deviation",
+      "medianAbsoluteDeviation" : "median absolute deviation"
     },
     "and": "and",
     "checkall": "Keep element if all rules are true",

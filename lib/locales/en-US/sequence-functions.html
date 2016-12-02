@@ -58,3 +58,33 @@ All rules are used to test whether each element is remained or removed in the li
    <li><code>Keep element if one of the rules is true</code> ... Remove an element when all rules are false</li>
 </ul>
 </script>
+
+<script type="text/x-red" data-help-name="stats">
+<p>A function applied to a sequence of messages in a list(<code>msg.payload</code>) in order to perform statistical processing.</p>
+<p>You can set a topic in <code>msg.topic</code> if necessary.</p>
+<p>This node regards the passed <code>msg.payload</code> is an array of numeric value. Arrays and objects aren't expected to be included in the array.
+Use <code>map</code> node to transform such an object into string, numeric value or boolean value.</p>
+
+<p>The supported statistical methods are:</p>
+<ul>
+   <li><code>min</code></li>
+   <li><code>max</code></li>
+   <li><code>sum</code></li>
+   <li><code>sumSimple</code></li>
+   <li><code>product</code></li>
+   <li><code>mean</code></li>
+   <li><code>harmonicMean</code></li>
+   <li><code>geometricMean</code></li>
+   <li><code>rootMeanSquare</code></li>
+   <li><code>sampleSkewness</code></li>
+   <li><code>variance</code></li>
+   <li><code>standardDeviation</code></li>
+   <li><code>sampleStandardDeviation</code></li>
+   <li><code>medianAbsoluteDeviation</code></li>
+</ul>
+
+<p>The underlying statistics library is
+<a target="_blank" href="https://github.com/simple-statistics/simple-statistics">
+simple-statistics module</a>. Please refer to the
+<a target="_blank" href="http://simplestatistics.org/docs/">document</a> for the method detail.</p>
+</script>

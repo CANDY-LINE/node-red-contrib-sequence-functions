@@ -22,7 +22,7 @@ describe('sequence-functions module', () => {
   it('should be successfully initialized', () => {
     let registerType = sandbox.stub(RED.nodes, 'registerType');
     eventProcessing(RED);
-    assert.equal(4, registerType.callCount);
+    assert.equal(5, registerType.callCount);
   });
 
   describe('CaptureNode', () => {
@@ -152,6 +152,39 @@ describe('sequence-functions module', () => {
         assert.equal('my-name', node.name);
         assert.isDefined(node.rules);
         assert.isDefined(node.checkall);
+      });
+    });
+  });
+
+  describe('StatsNode', () => {
+    let StatsNode;
+    beforeEach(() => {
+      RED.nodes.createNode = t => {
+        t.status = () => {};
+        t.on = () => {};
+        t.send = () => {};
+      };
+      RED.nodes.registerType = (n, t) => {
+        if (n === 'stats') {
+          StatsNode = t;
+        }
+      };
+    });
+    afterEach(() => {
+      sandbox.restore();
+    });
+    describe('#constructor()', () => {
+      it('should be able to create a new StatsNode', () => {
+        eventProcessing(RED);
+        assert.isDefined(StatsNode);
+        let node = new StatsNode({
+          name: 'my-name',
+          topic: 'topic',
+          statsFunction: 'mean'
+        });
+        assert.equal('my-name', node.name);
+        assert.equal('topic', node.topic);
+        assert.equal('mean', node.statsFunction);
       });
     });
   });
