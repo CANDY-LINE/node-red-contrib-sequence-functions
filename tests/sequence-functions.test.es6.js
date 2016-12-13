@@ -83,10 +83,26 @@ describe('sequence-functions module', () => {
           name: 'my-name',
           topic: '123',
           valueProperty: 'payload',
-          mapFunctionExpr: 'x'
+          mapFunctionExpr: 'x',
+          mapToString: true
         });
         assert.equal('my-name', node.name);
         assert.isDefined(node.mapFunction);
+        assert.isString(node.mapFunction(1));
+      });
+      it('should be able to create a new MapNode with mapToString being false', () => {
+        eventProcessing(RED);
+        assert.isDefined(MapNode);
+        let node = new MapNode({
+          name: 'my-name',
+          topic: '123',
+          valueProperty: 'payload',
+          mapFunctionExpr: 'x',
+          mapToString: false
+        });
+        assert.equal('my-name', node.name);
+        assert.isDefined(node.mapFunction);
+        assert.isNotString(node.mapFunction(1));
       });
     });
   });

@@ -87,12 +87,18 @@ export default function(RED) {
       this.topic = n.topic;
       this.valueProperty = n.valueProperty || 'payload';
       this.readFromProperty = n.readFromProperty;
+      this.mapToString = n.mapToString;
       if (n.mapFunctionExpr) {
         this.parsedMapFunction = Parser.parse(n.mapFunctionExpr);
         try {
           this.parsedMapFunction.evaluate({ x: 0 });
           this.mapFunction = (val) => {
-            return this.parsedMapFunction.evaluate({ x: val });
+            let result = this.parsedMapFunction.evaluate({ x: val });
+            if (this.mapToString) {
+              return String(result);
+            } else {
+              result;
+            }
           };
         } catch (e) {
           RED.log.error(RED._('sequence-functions.errors.parserError', { error: e }));
@@ -100,7 +106,11 @@ export default function(RED) {
       }
       if (!this.mapFunction) {
         this.mapFunction = (val) => {
-          return val;
+          if (this.mapToString) {
+            return String(val);
+          } else {
+            return val;
+          }
         };
       }
       let node = this;

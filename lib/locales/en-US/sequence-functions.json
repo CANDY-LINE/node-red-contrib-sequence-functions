@@ -4,6 +4,7 @@
       "topic" : "Topic",
       "valueProperty" : "Value (x) Property",
       "mapFunctionExpr" : "Map function expression",
+      "mapToString" : "Convert to String",
       "reduceFunctionExpr" : "Reduce function expression",
       "reduceRight" : "Reduce right",
       "readFromProperty" : "Read value from property",
