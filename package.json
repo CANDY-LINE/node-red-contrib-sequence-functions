@@ -1,6 +1,6 @@
 {
   "name": "node-red-contrib-sequence-functions",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Node-RED nodes for sequence processing functions",
   "license": "MIT",
   "repository": {
@@ -27,6 +27,7 @@
     "CANDY EGG"
   ],
   "devDependencies": {
+    "node-red": "^0.15.2",
     "babel": "^5.8.34",
     "babel-plugin-uglify": "^1.0.2",
     "uglify-js": "^2.6.1",
@@ -48,7 +49,6 @@
   "dependencies": {
     "es6-promises": "^1.0.10",
     "expr-eval": "^1.0.0-rc.3",
-    "node-red": "^0.15.2",
     "simple-statistics": "^2.2.0",
     "source-map-support": "^0.4.2"
   },

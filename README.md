@@ -316,6 +316,9 @@ You can try the following flow for testing the node behaviors after installing t
 ```
 
 # Revision History
+* 1.1.1
+    - Remove redundant dependency
+
 * 1.1.0
     - Add a new property `Convert to String` into `map` node, which enables to convert the map function result into String
 
