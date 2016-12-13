@@ -22,7 +22,7 @@ You can use existing `split` node and `function` node in conjunction with the ab
 ### Installation
 
 ```
-cd ~\.node-red
+cd ~/.node-red
 npm install node-red-contrib-sequence-functions
 ```
 
