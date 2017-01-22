@@ -97,7 +97,7 @@ export default function(RED) {
             if (this.mapToString) {
               return String(result);
             } else {
-              result;
+              return result;
             }
           };
         } catch (e) {

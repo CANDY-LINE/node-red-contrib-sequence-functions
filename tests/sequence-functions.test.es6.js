@@ -102,7 +102,7 @@ describe('sequence-functions module', () => {
         });
         assert.equal('my-name', node.name);
         assert.isDefined(node.mapFunction);
-        assert.isNotString(node.mapFunction(1));
+        assert.isNumber(node.mapFunction(1));
       });
     });
   });
