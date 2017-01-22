@@ -316,6 +316,9 @@ You can try the following flow for testing the node behaviors after installing t
 ```
 
 # Revision History
+* 1.1.3
+    - Fix an issue where MapNode failed to evaluate object addressing syntax
+
 * 1.1.2
     - Fix an issue where MapNode failed to emit a raw type object (always null)
 

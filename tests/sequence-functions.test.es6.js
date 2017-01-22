@@ -104,6 +104,45 @@ describe('sequence-functions module', () => {
         assert.isDefined(node.mapFunction);
         assert.isNumber(node.mapFunction(1));
       });
+      it('should be able to handle a simple object', () => {
+        eventProcessing(RED);
+        assert.isDefined(MapNode);
+        let node = new MapNode({
+          name: 'my-name',
+          topic: '123',
+          valueProperty: 'payload',
+          mapFunctionExpr: 'x.test ? "yes" : "no"',
+          mapToString: false
+        });
+        assert.equal('my-name', node.name);
+        assert.isDefined(node.mapFunction);
+        assert.equal('yes', node.mapFunction({test: true}));
+        assert.equal('yes', node.mapFunction({test: 1}));
+        assert.equal('no', node.mapFunction({test: 0}));
+        assert.equal('no', node.mapFunction({}));
+        assert.equal('no', node.mapFunction(1));
+        assert.equal('no', node.mapFunction(0));
+      });
+      it('should be able to handle msg object', () => {
+        eventProcessing(RED);
+        RED._ = () => {};
+        assert.isDefined(MapNode);
+        let node = new MapNode({
+          name: 'my-name',
+          topic: '123',
+          valueProperty: 'payload',
+          mapFunctionExpr: 'x.payload.test ? "yes" : "no"',
+          mapToString: false
+        });
+        assert.equal('my-name', node.name);
+        assert.isDefined(node.mapFunction);
+        assert.equal('yes', node.mapFunction({topic:'topic',payload:{test: true}}));
+        assert.equal('yes', node.mapFunction({topic:'topic',payload:{test: 1}}));
+        assert.equal('no', node.mapFunction({topic:'topic',payload:{test: 0}}));
+        assert.equal('no', node.mapFunction({topic:'topic',payload:{test: false}}));
+        assert.equal('no', node.mapFunction({topic:'topic',payload:{}}));
+        assert.isNull(node.mapFunction({}));
+      });
     });
   });
 

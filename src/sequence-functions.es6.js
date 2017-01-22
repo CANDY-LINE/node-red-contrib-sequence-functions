@@ -90,19 +90,19 @@ export default function(RED) {
       this.mapToString = n.mapToString;
       if (n.mapFunctionExpr) {
         this.parsedMapFunction = Parser.parse(n.mapFunctionExpr);
-        try {
-          this.parsedMapFunction.evaluate({ x: 0 });
-          this.mapFunction = (val) => {
+        this.mapFunction = (val) => {
+          try {
             let result = this.parsedMapFunction.evaluate({ x: val });
             if (this.mapToString) {
               return String(result);
             } else {
               return result;
             }
-          };
-        } catch (e) {
-          RED.log.error(RED._('sequence-functions.errors.parserError', { error: e }));
-        }
+          } catch (e) {
+            RED.log.error(RED._('sequence-functions.errors.parserError', { error: e }));
+            return null;
+          }
+        };
       }
       if (!this.mapFunction) {
         this.mapFunction = (val) => {
